@@ -1,5 +1,5 @@
 // reusableStages.groovy
-def call() {
+def runStages() {
     pipeline {
         agent any
         stages {
@@ -16,3 +16,5 @@ def call() {
         }
     }
 }
+
+return this
