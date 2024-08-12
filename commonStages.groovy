@@ -1,14 +1,22 @@
 def buildStage() {
     defineEnvVars()
     echo "Building the application... PROJECT_NAME=${env.PROJECT_NAME}"
-
     echo "La imagen que se va a generar es: ${DOCKER_REGISTRY}/${IMAGE_FULL_NAME}"
-    // docker.build("${DOCKER_REGISTRY}/${IMAGE_FULL_NAME}", "-f deploy/Dockerfile .")
+    docker.build("${DOCKER_REGISTRY}/${IMAGE_FULL_NAME}", "-f $DOCKERFILE $DOCKER_CONTEXT")
+}
+
+def pushStage() {
+    docker.withRegistry("http://${DOCKER_REGISTRY}") {
+        docker.image("${DOCKER_REGISTRY}/${IMAGE_FULL_NAME}").push()
+    }
 }
 
 def deployStage() {
-    echo "Deploying the application..."
-    // Deploy steps
+    sh '''
+        #!/bin/bash
+        chmod +x ./deploy/scripts/deploy-01-deploy.sh
+        ./deploy/scripts/deploy-01-deploy.sh
+    '''
 }
 
 def defineEnvVars() {
