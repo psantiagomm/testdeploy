@@ -5,7 +5,7 @@ def runStages() {
         stages {
             stage('Build') {
                 steps {
-                    echo "Building the application with PROJECT_NAME=${env.PROJECT_NAME}"
+                    echo "Building the application with"
                 }
             }
             stage('Deploy') {
