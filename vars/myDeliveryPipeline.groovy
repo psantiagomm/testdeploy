@@ -1,9 +1,9 @@
-def setupPipeline() {
+def call() {
 
     pipeline {
         agent any
         stages {
-            stage('build') {
+            stage('checkout git') {
                 steps {
                     echo "funciona"
                 }
@@ -11,5 +11,3 @@ def setupPipeline() {
         }
     }
 }
-
-return this
