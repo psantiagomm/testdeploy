@@ -1,8 +1,11 @@
 def buildStage() {
     defineEnvVars()
-    pwd
-    ls -l
-    whoami
+    sh '''
+        #!/bin/bash
+        whoami
+        pwd
+        ls -l
+    '''
     echo "Building the application... PROJECT_NAME=${env.PROJECT_NAME}"
     echo "La imagen que se va a generar es: ${DOCKER_REGISTRY}/${IMAGE_FULL_NAME}"
     docker.build("${DOCKER_REGISTRY}/${IMAGE_FULL_NAME}", "-f $DOCKERFILE $DOCKER_CONTEXT")
