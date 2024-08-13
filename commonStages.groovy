@@ -8,7 +8,8 @@ def buildStage() {
     '''
     echo "Building the application... PROJECT_NAME=${env.PROJECT_NAME}"
     echo "La imagen que se va a generar es: ${DOCKER_REGISTRY}/${IMAGE_FULL_NAME}"
-    docker.build("${DOCKER_REGISTRY}/${IMAGE_FULL_NAME}", "-f $DOCKERFILE $DOCKER_CONTEXT")
+    docker.build("${DOCKER_REGISTRY}/${IMAGE_FULL_NAME}", "-f $APP_DOCKERFILE $APP_DOCKER_CONTEXT")
+    echo "Imagen contruida exitosamente"
 }
 
 def pushStage() {
