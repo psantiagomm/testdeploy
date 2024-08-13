@@ -1,12 +1,14 @@
 #!/bin/bash
 
+source ./scripts/functions.sh
+
 PROJECT=$PROJECT_NAME
 
 REDIS_PASSWORD=$(sh ./scripts/encrypt.sh -m "$MASTER_PASS" -p "$REDIS_PASSWORD")
 APP_PASSWORD=$(sh ./scripts/encrypt.sh -m "$MASTER_PASS" -p "$APP_PASSWORD")
 
 MESSAGES_PROPERTIES=$(echo "$MESSAGES_PROPERTIES" | sed '2,$ s/^/    /')
-APPLICATION_PROPERTIES=$(sh ./scripts/normalizeLines.sh "${APPLICATION_PROPERTIES}")
+APPLICATION_PROPERTIES=$(normalize "${APPLICATION_PROPERTIES}")
 RESILIENCE_PROPERTIES=$(echo "${RESILIENCE_PROPERTIES}" | sed '2,$ s/^/    /')
 
 awk -v project="$PROJECT" \
@@ -23,7 +25,7 @@ awk -v project="$PROJECT" \
     gsub(/{{REDIS_PASSWORD}}/, redis_password);
     gsub(/{{APP_PASSWORD}}/, app_password);
     print;
-}' ${PROJECT_PATH}deploy/configmap-template.yaml > configmap.yaml
+}' configmap-template.yaml > configmap.yaml
 
 
 echo "El configmap generado es"
