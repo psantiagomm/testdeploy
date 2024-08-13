@@ -14,3 +14,5 @@ def setupPipeline() {
 
     // Otros stages pueden ser agregados aquí
 }
+
+return this
