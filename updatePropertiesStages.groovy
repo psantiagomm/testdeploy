@@ -1,9 +1,11 @@
 def updateConfigmapStage() {
+    withCredentials([string(credentialsId: 'TESTJENKINS_MATER_PASS', variable: 'MASTER_PASS')]) {
     sh '''
         #!/bin/bash
         chmod +x ./scripts/update-properties-01-configmap.sh
         ./scripts/update-properties-01-configmap.sh
     '''
+    }
 }
 
 def waitStage() {
