@@ -14,6 +14,8 @@ def pushStage() {
 def deployStage() {
     sh '''
         #!/bin/bash
+        pwd
+        ls -l
         chmod +x ./deploy/scripts/deploy-01-deploy.sh
         ./deploy/scripts/deploy-01-deploy.sh
     '''
