@@ -12,12 +12,14 @@ def buildStage() {
 }
 
 def pushStage() {
+    defineEnvVars()
     docker.withRegistry("http://${DOCKER_REGISTRY}") {
         docker.image("${DOCKER_REGISTRY}/${IMAGE_FULL_NAME}").push()
     }
 }
 
 def deployStage() {
+    defineEnvVars()
     sh '''
         #!/bin/bash
         pwd
