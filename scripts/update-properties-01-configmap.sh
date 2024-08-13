@@ -2,11 +2,11 @@
 
 PROJECT=$PROJECT_NAME
 
-REDIS_PASSWORD=$(sh ./deploy/scripts/encrypt.sh -m "$MASTER_PASS" -p "$REDIS_PASSWORD")
-APP_PASSWORD=$(sh ./deploy/scripts/encrypt.sh -m "$MASTER_PASS" -p "$APP_PASSWORD")
+REDIS_PASSWORD=$(sh ./scripts/encrypt.sh -m "$MASTER_PASS" -p "$REDIS_PASSWORD")
+APP_PASSWORD=$(sh ./scripts/encrypt.sh -m "$MASTER_PASS" -p "$APP_PASSWORD")
 
 MESSAGES_PROPERTIES=$(echo "$MESSAGES_PROPERTIES" | sed '2,$ s/^/    /')
-APPLICATION_PROPERTIES=$(sh ./deploy/scripts/normalizeLines.sh "${APPLICATION_PROPERTIES}")
+APPLICATION_PROPERTIES=$(sh ./scripts/normalizeLines.sh "${APPLICATION_PROPERTIES}")
 RESILIENCE_PROPERTIES=$(echo "${RESILIENCE_PROPERTIES}" | sed '2,$ s/^/    /')
 
 awk -v project="$PROJECT" \
