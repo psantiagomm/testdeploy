@@ -29,7 +29,7 @@ pipeline {
         stage('Load Reusable Stages') {
             steps {
                 script {
-                    stages = load './deployStages.groovy'
+                    stages = load './deploy/scripts/groovy/deployStages.groovy'
                 }
             }
         }
