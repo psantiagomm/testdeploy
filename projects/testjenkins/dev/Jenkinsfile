@@ -1,11 +1,10 @@
 pipeline {
     agent any
     environment {
-        APP_ARTIFACT_ID = readMavenPom(file: 'app/pom.xml').getArtifactId()
-    	APP_ARTIFACT_VERSION = readMavenPom(file: 'app/pom.xml').getVersion()
 
         APP_DOCKER_REGISTRY = "localhost:5000"
-        APP_IMAGE_FULL_NAME = "${ARTIFACT_ID}:${ARTIFACT_VERSION}"
+
+        APP_POM_PATH = 'app/pom.xml'
 
         APP_PROJECT_NAME = 'testjenkins'
         APP_PROJECT_PATH = ""
@@ -16,10 +15,44 @@ pipeline {
         APP_DOCKER_CONTEXT = "app"
     }
     stages {
-        stage('Print') {
+        stage('Clone app repository') {
+            steps {
+                dir('app') {
+                    checkout([
+                        $class: 'GitSCM', 
+                        branches: [[name: '*/main']],
+                        userRemoteConfigs: [[url: 'https://github.com/psantiagomm/testjenkins.git']]
+                    ])
+                }
+            }
+        }
+        stage('Load Reusable Stages') {
             steps {
                 script {
-                    echo "Print stage"
+                    stages = load './updatePropertiesStages.groovy'
+                }
+            }
+        }
+        stage('Update configmap') {
+
+            steps {
+                script {
+                    stages.updateConfigmapStage()
+                    
+                }
+            }
+        }
+        stage('Wait') {
+            steps {
+                script {
+                    stages.waitStage()
+                }
+            }
+        }
+        stage('Refresh pods') {
+            steps {
+                script {
+                    stages.refreshPodsStage()
                 }
             }
         }
