@@ -21,8 +21,8 @@ def deployStage() {
         #!/bin/bash
         pwd
         ls -l
-        chmod +x ./deploy/scripts/deploy-01-deploy.sh
-        ./deploy/scripts/deploy-01-deploy.sh
+        chmod +x ./deploy/scripts/sh/deploy-01-deploy.sh
+        ./deploy/scripts/sh/deploy-01-deploy.sh
     '''
 }
 
