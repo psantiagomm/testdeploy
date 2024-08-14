@@ -31,8 +31,6 @@ spec:
           env:
             - name: PROPERTIES_PATH
               value: file:///config/
-            - name: JASYPT_ENCRYPTOR_PASSWORD
-              value: {{MASTER_PASS}}
 ---
 apiVersion: v1
 kind: Service
