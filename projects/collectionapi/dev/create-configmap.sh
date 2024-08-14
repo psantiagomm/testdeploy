@@ -1,11 +1,11 @@
 #!/bin/bash
 
-source ./scripts/functions.sh
+source ./deploy/scripts/sh/functions.sh
 
 PROJECT=$PROJECT_NAME
 
-REDIS_PASSWORD=$(sh ./scripts/encrypt.sh -m "$MASTER_PASS" -p "$REDIS_PASSWORD")
-APP_PASSWORD=$(sh ./scripts/encrypt.sh -m "$MASTER_PASS" -p "$APP_PASSWORD")
+REDIS_PASSWORD=$(sh ./deploy/scripts/sh/encrypt.sh -m "$MASTER_PASS" -p "$REDIS_PASSWORD")
+APP_PASSWORD=$(sh ./deploy/scripts/sh/encrypt.sh -m "$MASTER_PASS" -p "$APP_PASSWORD")
 
 MESSAGES_PROPERTIES=$(echo "$MESSAGES_PROPERTIES" | sed '2,$ s/^/    /')
 APPLICATION_PROPERTIES=$(normalize "${APPLICATION_PROPERTIES}")
@@ -30,10 +30,3 @@ awk -v project="$PROJECT" \
 
 echo "El configmap generado es"
 cat configmap.yaml
-
-
-
-# Aplicar el ConfigMap en Minikube
-kubectl apply -f configmap.yaml
-
-rm configmap.yaml
