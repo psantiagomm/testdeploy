@@ -16,7 +16,7 @@ cat <<EOF > configmap.yaml
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: testjenkins
+  name: $APP_PROJECT_NAME
 data:
   application.properties: |
     $APPLICATION_PROPERTIES
