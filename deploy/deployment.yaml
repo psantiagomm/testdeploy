@@ -1,0 +1,49 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{PROJECT}}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: {{PROJECT}}
+  template:
+    metadata:
+      labels:
+        app: {{PROJECT}}
+    spec:
+      volumes:
+        - name: config-volume
+          configMap:
+            name: {{PROJECT}}
+      containers:
+        - name: {{PROJECT}}
+          image: {{IMAGE}}
+          command: ["java"]
+          args: ["-jar", "app.jar", "--spring.config.additional-location=file:///config/", "--spring.profiles.active={{PROFILE}}", "--jasypt.encryptor.password=${JASYPT_ENCRYPTOR_PASSWORD}"]
+          ports:
+            - containerPort: 8080
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: config-volume
+              mountPath: /config
+              readOnly: false
+          env:
+            - name: PROPERTIES_PATH
+              value: file:///config/
+            - name: JASYPT_ENCRYPTOR_PASSWORD
+              value: {{MASTER_PASS}}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{PROJECT}}
+spec:
+  type: NodePort
+  selector:
+    app: {{PROJECT}}
+  ports:
+    - port: {{PORT}}
+      targetPort: 8080
+      protocol: TCP
+      nodePort: {{NODEPORT}}

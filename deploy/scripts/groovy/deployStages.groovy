@@ -1,21 +1,17 @@
 def buildStage() {
     defineEnvVars()
-    sh '''
-        #!/bin/bash
-        whoami
-        pwd
-        ls -l
-    '''
     echo "Building the application... APP_PROJECT_NAME=${env.APP_PROJECT_NAME}"
-    echo "La imagen que se va a generar es: ${DOCKER_REGISTRY}/${IMAGE_FULL_NAME}"
-    docker.build("${DOCKER_REGISTRY}/${IMAGE_FULL_NAME}", "-f $APP_DOCKERFILE $APP_DOCKER_CONTEXT")
+    echo "La imagen que se va a generar es: ${DOCKER_REGISTRY}/${APP_IMAGE_FULL_NAME}"
+    docker.build("${DOCKER_REGISTRY}/${APP_IMAGE_FULL_NAME}", "-f $APP_DOCKERFILE $APP_DOCKER_CONTEXT")
     echo "Imagen contruida exitosamente"
+    echo "Funciona env.APP_FUNCIONA ${env.APP_FUNCIONA}"
+    echo "Funciona APP_FUNCIONA ${APP_FUNCIONA}"
 }
 
 def pushStage() {
     defineEnvVars()
     docker.withRegistry("http://${DOCKER_REGISTRY}") {
-        docker.image("${DOCKER_REGISTRY}/${IMAGE_FULL_NAME}").push()
+        docker.image("${DOCKER_REGISTRY}/${APP_IMAGE_FULL_NAME}").push()
     }
 }
 
@@ -32,9 +28,7 @@ def deployStage() {
 
 def defineEnvVars() {
     env.IMAGE_NAME = env.APP_PROJECT_NAME
-    COMMIT_HASH = sh(returnStdout: true, script: 'git rev-parse --short HEAD').trim()
-    IMAGE_TAG = "${env.BUILD_NUMBER}-${COMMIT_HASH}"
-    IMAGE_FULL_NAME = "${IMAGE_NAME}:${IMAGE_TAG}"
+    env.APP_FUNCIONA = "Valor de funciona"
 }
 
 return this

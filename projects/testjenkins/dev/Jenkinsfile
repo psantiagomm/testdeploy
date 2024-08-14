@@ -1,11 +1,22 @@
 pipeline {
     agent any
     environment {
+        APP_ARTIFACT_ID = readMavenPom(file: 'app/pom.xml').getArtifactId()
+    	APP_ARTIFACT_VERSION = readMavenPom(file: 'app/pom.xml').getVersion()
+
+        APP_DOCKER_REGISTRY = "localhost:5000"
+        APP_IMAGE_FULL_NAME = "${ARTIFACT_ID}:${ARTIFACT_VERSION}"
+
         APP_PROJECT_NAME = 'testjenkins'
         APP_PROJECT_PATH = ""
+        APP_PROFILE = "dev"
+        APP_PORT = 8081
+        APP_NODEPORT = 30001
+        APP_DOCKERFILE = "app/deploy/Dockerfile"
+        APP_DOCKER_CONTEXT = "app"
     }
     stages {
-        stage('Clonar Repositorios') {
+        stage('Clone Repository') {
             steps {
                 // Clonar el primer repositorio
                 checkout([
