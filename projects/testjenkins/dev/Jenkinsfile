@@ -44,11 +44,6 @@ pipeline {
             }
         }
         stage('Build Docker Image') {
-            environment {
-                APP_ARTIFACT_ID = readMavenPom(file: "$APP_POM_PATH").getArtifactId()
-                APP_ARTIFACT_VERSION = readMavenPom(file: "$APP_POM_PATH").getVersion()
-                APP_IMAGE_FULL_NAME = "${ARTIFACT_ID}:${ARTIFACT_VERSION}"
-            }
             steps {
                 script {
                     stages.defineEnvVars()
@@ -71,12 +66,7 @@ pipeline {
                 }
             }
         }
-        stage('Push Docker Image') {
-            environment {
-                APP_ARTIFACT_ID = readMavenPom(file: "$APP_POM_PATH").getArtifactId()
-                APP_ARTIFACT_VERSION = readMavenPom(file: "$APP_POM_PATH").getVersion()
-                APP_IMAGE_FULL_NAME = "${ARTIFACT_ID}:${ARTIFACT_VERSION}"
-            }            
+        stage('Push Docker Image') {          
             steps {
                 script {
                     stages.pushStage()
@@ -87,11 +77,6 @@ pipeline {
             }
         }
         stage('Deploy to Kubernetes') {
-            environment {
-                APP_ARTIFACT_ID = readMavenPom(file: "$APP_POM_PATH").getArtifactId()
-                APP_ARTIFACT_VERSION = readMavenPom(file: "$APP_POM_PATH").getVersion()
-                APP_IMAGE_FULL_NAME = "${ARTIFACT_ID}:${ARTIFACT_VERSION}"
-            }
             steps {
                 script {
                     withCredentials([string(credentialsId: 'TESTJENKINS_MATER_PASS', variable: 'MASTER_PASS')]) {
