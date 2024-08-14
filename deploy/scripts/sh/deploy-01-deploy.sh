@@ -17,7 +17,7 @@ awk -v project="$PROJECT" \
     gsub(/{{PROFILE}}/, profile);
     gsub(/{{PORT}}/, port);
     gsub(/{{NODEPORT}}/, nodePort);
-    gsub(/{{APP_REPLICAS}}/, replicas);
+    gsub(/{{REPLICAS}}/, replicas);
     gsub(/{{MASTER_PASS}}/, masterPass);
     print;
 }' deploy/deployment.yaml > deployment.yaml
