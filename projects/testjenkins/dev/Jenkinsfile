@@ -43,6 +43,12 @@ pipeline {
                 script {
                     stages.defineEnvVars()
                     echo "Funciona la variable global ${APP_IMAGE_FULL_NAME}"
+
+                    sh '''
+                    echo "Contenido del archivo pom"
+                    cat "$APP_DOCKERFILE"
+                    '''
+
                     // docker.build("${APP_DOCKER_REGISTRY}/${APP_IMAGE_FULL_NAME}", ".")
                     stages.buildStage()
                     sh '''
