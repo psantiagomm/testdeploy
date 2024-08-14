@@ -11,6 +11,6 @@ awk -v project="$PROJECT" -v image="$IMAGE" -v masterPass="$MASTER_PASS" '
     print;
 }' ${APP_PROJECT_PATH}deploy/deployment.yaml > deployment.yaml
 
-kubectl apply -f deployment.yaml -n "$APP_KUBE_CONTEXT"
+kubectl apply -f deployment.yaml -n "$APP_KUBE_NAMESPACE"
 
 rm deployment.yaml

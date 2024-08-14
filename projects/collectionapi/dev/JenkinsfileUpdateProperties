@@ -3,7 +3,7 @@ pipeline {
     environment {
         APP_PROJECT_NAME = 'collection'
         APP_PROJECT_PATH = ""
-        APP_KUBE_CONTEXT = "default"
+        APP_KUBE_NAMESPACE = "default"
         APP_RELATIVE_PATH = "./projects/collectionapi/dev"
         APP_CREATE_CONFIGMAP_SCRIPT = "$APP_RELATIVE_PATH/create-configmap.sh"
         APP_REFRESH_PODS_TIMEOUT = 10
