@@ -33,7 +33,7 @@ def defineEnvVars() {
     def pom = readMavenPom file: "$APP_POM_PATH"
     env.APP_ARTIFACT_ID = pom.artifactId
     env.APP_ARTIFACT_VERSION = pom.version
-    env.APP_IMAGE_FULL_NAME = "${ARTIFACT_ID}:${ARTIFACT_VERSION}"
+    env.APP_IMAGE_FULL_NAME = "${APP_ARTIFACT_ID}:${APP_ARTIFACT_VERSION}"
 
 
     echo "POM Content: ${pom}"
