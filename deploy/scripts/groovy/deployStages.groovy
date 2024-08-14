@@ -29,10 +29,6 @@ def deployStage() {
 def defineEnvVars() {
     env.IMAGE_NAME = env.APP_PROJECT_NAME
     env.APP_FUNCIONA = "Valor de funciona"
-
-    env.APP_ARTIFACT_ID = readMavenPom(file: 'app/pom.xml').getArtifactId()
-    env.APP_ARTIFACT_VERSION = readMavenPom(file: 'app/pom.xml').getVersion()
-    env.APP_IMAGE_FULL_NAME = "${ARTIFACT_ID}:${ARTIFACT_VERSION}"
 }
 
 return this
