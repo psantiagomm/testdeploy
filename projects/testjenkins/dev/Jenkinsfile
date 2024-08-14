@@ -34,36 +34,11 @@ pipeline {
                 }
             }
         }
-        stage('Read Maven POM') {
-            steps {
-                script {
-                    def pom = readMavenPom file: "$APP_POM_PATH"
-                    echo "POM Content: ${pom}"
-                    echo "ArtifactId: ${pom.artifactId ?: 'No ArtifactId found'}"
-                    echo "Version: ${pom.version ?: 'No Version found'}"
-                }
-            }
-        }
         stage('Build Docker Image') {
             steps {
                 script {
                     stages.defineEnvVars()
-                    echo "Funciona la variable global ${APP_IMAGE_FULL_NAME}"
-
-                    sh '''
-                    echo "Contenido del archivo pom"
-                    cat "$APP_POM_PATH"
-                    '''
-
-                    // docker.build("${APP_DOCKER_REGISTRY}/${APP_IMAGE_FULL_NAME}", ".")
-                    stages.buildStage()
-                    sh '''
-                    docker --version
-                    '''
-                    //docker build -t ${APP_DOCKER_REGISTRY}/${APP_IMAGE_FULL_NAME} -f ${APP_DOCKERFILE} ${APP_DOCKER_CONTEXT}
-                    
-                    echo "Funcionó el comando build"
-                    
+                    stages.buildStage()                    
                 }
             }
         }
@@ -71,18 +46,13 @@ pipeline {
             steps {
                 script {
                     stages.pushStage()
-                    docker.withRegistry("http://${APP_DOCKER_REGISTRY}") {
-                        docker.image("${APP_DOCKER_REGISTRY}/${APP_IMAGE_FULL_NAME}").push()
-                    }
                 }
             }
         }
         stage('Deploy to Kubernetes') {
             steps {
                 script {
-                    withCredentials([string(credentialsId: 'TESTJENKINS_MATER_PASS', variable: 'MASTER_PASS')]) {
                         stages.deployStage()
-                    }
                 }
             }
         }

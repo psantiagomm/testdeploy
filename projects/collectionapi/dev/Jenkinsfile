@@ -1,47 +1,88 @@
 pipeline {
     agent any
     environment {
-        APP_PROJECT_NAME = 'collection'
+
+        APP_DOCKER_REGISTRY = "localhost:5000"
+
+        APP_POM_PATH = 'app/collectionapi/pom.xml'
+
+        APP_PROJECT_NAME = 'collectionapi'
         APP_PROJECT_PATH = ""
+        APP_PROFILE = "dev"
+        APP_PORT = 8081
+        APP_NODEPORT = 30001
+        APP_DOCKERFILE = "app/collectionapi/deploy/Dockerfile"
+        APP_DOCKER_CONTEXT = "app/collectionapi"
+        APP_REPLICAS = 1
     }
     stages {
-        stage('Clonar Repositorios') {
+        stage('Clone app repository') {
             steps {
-                // Clonar el primer repositorio
-                checkout([
-                    $class: 'GitSCM', 
-                    branches: [[name: '*/main']],
-                    userRemoteConfigs: [[url: 'https://github.com/psantiagomm/testdeploy.git']]
-                ])
+                dir('app') {
+                    checkout([
+                        $class: 'GitSCM', 
+                        branches: [[name: '*/main']],
+                        userRemoteConfigs: [[url: 'http://10.100.82.76:9003/Indra-T1/gatewayfixed/collect.git', credentialsId: 'SANTIAGO_GIT_TIGO' ]]
+                    ])
+                }
             }
         }
         stage('Load Reusable Stages') {
             steps {
                 script {
-                    stages = load './updatePropertiesStages.groovy'
+                    stages = load './deploy/scripts/groovy/deployStages.groovy'
                 }
             }
         }
-        stage('Update configmap') {
-
+        stage('Read Maven POM') {
             steps {
                 script {
-                    stages.updateConfigmapStage()
+                    def pom = readMavenPom file: "$APP_POM_PATH"
+                    echo "POM Content: ${pom}"
+                    echo "ArtifactId: ${pom.artifactId ?: 'No ArtifactId found'}"
+                    echo "Version: ${pom.version ?: 'No Version found'}"
+                }
+            }
+        }
+        stage('Build Docker Image') {
+            steps {
+                script {
+                    stages.defineEnvVars()
+                    echo "Funciona la variable global ${APP_IMAGE_FULL_NAME}"
+
+                    sh '''
+                    echo "Contenido del archivo pom"
+                    cat "$APP_POM_PATH"
+                    '''
+
+                    // docker.build("${APP_DOCKER_REGISTRY}/${APP_IMAGE_FULL_NAME}", ".")
+                    stages.buildStage()
+                    sh '''
+                    docker --version
+                    '''
+                    //docker build -t ${APP_DOCKER_REGISTRY}/${APP_IMAGE_FULL_NAME} -f ${APP_DOCKERFILE} ${APP_DOCKER_CONTEXT}
+                    
+                    echo "Funcionó el comando build"
                     
                 }
             }
         }
-        stage('Wait') {
+        stage('Push Docker Image') {          
             steps {
                 script {
-                    stages.waitStage()
+                    stages.pushStage()
+                    docker.withRegistry("http://${APP_DOCKER_REGISTRY}") {
+                        docker.image("${APP_DOCKER_REGISTRY}/${APP_IMAGE_FULL_NAME}").push()
+                    }
                 }
             }
         }
-        stage('Refresh pods') {
+        stage('Deploy to Kubernetes') {
             steps {
                 script {
-                    stages.refreshPodsStage()
+                    withCredentials([string(credentialsId: 'COLLECTIONAPI_MATER_PASS', variable: 'MASTER_PASS')]) {
+                        stages.deployStage()
+                    }
                 }
             }
         }

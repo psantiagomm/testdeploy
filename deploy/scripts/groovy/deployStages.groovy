@@ -17,6 +17,7 @@ def pushStage() {
 
 def deployStage() {
     defineEnvVars()
+    withCredentials([string(credentialsId: 'TESTJENKINS_MATER_PASS', variable: 'MASTER_PASS')]) {
     sh '''
         #!/bin/bash
         pwd
@@ -24,6 +25,7 @@ def deployStage() {
         chmod +x ./deploy/scripts/sh/deploy-01-deploy.sh
         ./deploy/scripts/sh/deploy-01-deploy.sh
     '''
+    }
 }
 
 def defineEnvVars() {
