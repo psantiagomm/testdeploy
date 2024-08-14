@@ -22,6 +22,10 @@ awk -v project="$PROJECT" \
     print;
 }' deploy/deployment.yaml > deployment.yaml
 
+echo "El deployment resultante"
+
+cat deployment.yaml
+
 kubectl apply -f deployment.yaml -n "$APP_KUBE_NAMESPACE"
 
 rm deployment.yaml
