@@ -37,7 +37,7 @@ pipeline {
             environment {
                 APP_ARTIFACT_ID = readMavenPom(file: "$APP_POM_PATH").getArtifactId()
                 APP_ARTIFACT_VERSION = readMavenPom(file: "$APP_POM_PATH").getVersion()
-                env.APP_IMAGE_FULL_NAME = "${ARTIFACT_ID}:${ARTIFACT_VERSION}"
+                APP_IMAGE_FULL_NAME = "${ARTIFACT_ID}:${ARTIFACT_VERSION}"
             }
             steps {
                 script {
@@ -59,7 +59,7 @@ pipeline {
             environment {
                 APP_ARTIFACT_ID = readMavenPom(file: "$APP_POM_PATH").getArtifactId()
                 APP_ARTIFACT_VERSION = readMavenPom(file: "$APP_POM_PATH").getVersion()
-                env.APP_IMAGE_FULL_NAME = "${ARTIFACT_ID}:${ARTIFACT_VERSION}"
+                APP_IMAGE_FULL_NAME = "${ARTIFACT_ID}:${ARTIFACT_VERSION}"
             }            
             steps {
                 script {
@@ -74,7 +74,7 @@ pipeline {
             environment {
                 APP_ARTIFACT_ID = readMavenPom(file: "$APP_POM_PATH").getArtifactId()
                 APP_ARTIFACT_VERSION = readMavenPom(file: "$APP_POM_PATH").getVersion()
-                env.APP_IMAGE_FULL_NAME = "${ARTIFACT_ID}:${ARTIFACT_VERSION}"
+                APP_IMAGE_FULL_NAME = "${ARTIFACT_ID}:${ARTIFACT_VERSION}"
             }
             steps {
                 script {
