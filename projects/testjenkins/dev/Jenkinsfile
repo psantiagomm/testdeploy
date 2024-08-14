@@ -16,14 +16,15 @@ pipeline {
         APP_DOCKER_CONTEXT = "app"
     }
     stages {
-        stage('Clone Repository') {
+        stage('Clone app repository') {
             steps {
-                // Clonar el primer repositorio
-                checkout([
-                    $class: 'GitSCM', 
-                    branches: [[name: '*/main']],
-                    userRemoteConfigs: [[url: 'https://github.com/psantiagomm/testdeploy.git']]
-                ])
+                dir('app') {
+                    checkout([
+                        $class: 'GitSCM', 
+                        branches: [[name: '*/main']],
+                        userRemoteConfigs: [[url: 'https://github.com/psantiagomm/testjenkins.git']]
+                    ])
+                }
             }
         }
         stage('Load Reusable Stages') {
