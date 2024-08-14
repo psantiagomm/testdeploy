@@ -46,7 +46,7 @@ pipeline {
 
                     sh '''
                     echo "Contenido del archivo pom"
-                    cat "$APP_DOCKERFILE"
+                    cat "$APP_POM_PATH"
                     '''
 
                     // docker.build("${APP_DOCKER_REGISTRY}/${APP_IMAGE_FULL_NAME}", ".")
