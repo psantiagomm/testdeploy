@@ -2,6 +2,7 @@ def updateConfigmapStage() {
     withCredentials([string(credentialsId: 'TESTJENKINS_MATER_PASS', variable: 'MASTER_PASS')]) {
     sh '''
         #!/bin/bash
+        chmod +x ${APP_CREATE_CONFIGMAP_SCRIPT}
         chmod +x ./deploy/scripts/sh/update-properties-01-configmap.sh
         ${APP_CREATE_CONFIGMAP_SCRIPT}
         ./deploy/scripts/sh/update-properties-01-configmap.sh
