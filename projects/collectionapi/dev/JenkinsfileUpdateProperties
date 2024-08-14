@@ -1,8 +1,8 @@
 pipeline {
     agent any
     environment {
-        PROJECT_NAME = 'collection'
-        PROJECT_PATH = ""
+        APP_PROJECT_NAME = 'collection'
+        APP_PROJECT_PATH = ""
         APP_KUBE_CONTEXT = "default"
         APP_RELATIVE_PATH = "./projects/collectionapi/dev"
         APP_CREATE_CONFIGMAP_SCRIPT = "$APP_RELATIVE_PATH/create-configmap.sh"

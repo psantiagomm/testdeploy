@@ -1,8 +1,8 @@
 pipeline {
     agent any
     environment {
-        PROJECT_NAME = 'collection'
-        PROJECT_PATH = ""
+        APP_PROJECT_NAME = 'collection'
+        APP_PROJECT_PATH = ""
     }
     stages {
         stage('Clonar Repositorios') {

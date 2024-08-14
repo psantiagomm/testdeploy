@@ -2,7 +2,7 @@
 
 source ./deploy/scripts/sh/functions.sh
 
-PROJECT=$PROJECT_NAME
+PROJECT=$APP_PROJECT_NAME
 
 REDIS_PASSWORD=$(sh ./deploy/scripts/sh/encrypt.sh -m "$MASTER_PASS" -p "$REDIS_PASSWORD")
 APP_PASSWORD=$(sh ./deploy/scripts/sh/encrypt.sh -m "$MASTER_PASS" -p "$APP_PASSWORD")
