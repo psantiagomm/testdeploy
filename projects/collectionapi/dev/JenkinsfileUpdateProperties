@@ -1,7 +1,7 @@
 pipeline {
     agent any
     environment {
-        APP_PROJECT_NAME = 'collection'
+        APP_PROJECT_NAME = 'collectionapi'
         APP_PROJECT_PATH = ""
         APP_KUBE_NAMESPACE = "default"
         APP_RELATIVE_PATH = "./projects/collectionapi/dev"

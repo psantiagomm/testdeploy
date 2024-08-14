@@ -11,21 +11,22 @@ MESSAGES_PROPERTIES=$(echo "$MESSAGES_PROPERTIES" | sed '2,$ s/^/    /')
 APPLICATION_PROPERTIES=$(normalize "${APPLICATION_PROPERTIES}")
 RESILIENCE_PROPERTIES=$(echo "${RESILIENCE_PROPERTIES}" | sed '2,$ s/^/    /')
 
-awk -v project="$PROJECT" \
-  -v application_properties="$APPLICATION_PROPERTIES" \
-  -v messages_properties="$MESSAGES_PROPERTIES" \
-  -v resilience_properties="$RESILIENCE_PROPERTIES" \
-  -v app_password="$APP_PASSWORD" \
-  -v redis_password="$REDIS_PASSWORD" '
-{
-    gsub(/{{PROJECT}}/, project);
-    gsub(/{{APPLICATION_PROPERTIES}}/, application_properties);
-    gsub(/{{MESSAGES_PROPERTIES}}/, messages_properties);
-    gsub(/{{RESILIENCE_PROPERTIES}}/, resilience_properties);
-    gsub(/{{REDIS_PASSWORD}}/, redis_password);
-    gsub(/{{APP_PASSWORD}}/, app_password);
-    print;
-}' $APP_RELATIVE_PATH/configmap-template.yaml > configmap.yaml
+# Crear el archivo configmap.yaml con los valores de los parámetros
+cat <<EOF > configmap.yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: testjenkins
+data:
+  application.properties: |
+    $APPLICATION_PROPERTIES
+    app.redis.password=$REDIS_PASSWORD
+    app.password=$APP_PASSWORD
+  messages.properties: |
+    $MESSAGES_PROPERTIES
+  resilience-dev.yaml: |
+    $RESILIENCE_PROPERTIES
+EOF
 
 
 echo "El configmap generado es"
