@@ -60,10 +60,10 @@ pipeline {
     }
     post {
         success {
-            echo 'Update properties completed successfully!'
+            echo 'Deploy completed successfully!'
         }
         failure {
-            echo 'Update properties failed!'
+            echo 'Deploy failed!'
         }
     }
 }
