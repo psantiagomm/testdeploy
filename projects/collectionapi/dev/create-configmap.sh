@@ -25,7 +25,7 @@ awk -v project="$PROJECT" \
     gsub(/{{REDIS_PASSWORD}}/, redis_password);
     gsub(/{{APP_PASSWORD}}/, app_password);
     print;
-}' configmap-template.yaml > configmap.yaml
+}' $APP_RELATIVE_PATH/configmap-template.yaml > configmap.yaml
 
 
 echo "El configmap generado es"

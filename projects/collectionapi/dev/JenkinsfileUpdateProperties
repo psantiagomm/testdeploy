@@ -3,7 +3,10 @@ pipeline {
     environment {
         PROJECT_NAME = 'collection'
         PROJECT_PATH = ""
-        APP_CREATE_CONFIGMAP_SCRIPT = "./projects/collectionapi/dev/create-configmap.sh"
+        APP_KUBE_CONTEXT = "default"
+        APP_RELATIVE_PATH = "./projects/collectionapi/dev"
+        APP_CREATE_CONFIGMAP_SCRIPT = "$APP_RELATIVE_PATH/create-configmap.sh"
+        APP_REFRESH_PODS_TIMEOUT = 10
     }
     stages {
         stage('Load Reusable Stages') {

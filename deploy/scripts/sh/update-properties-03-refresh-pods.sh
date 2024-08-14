@@ -3,7 +3,7 @@ echo "Actualizando los pods..."
 # Nombre del Deployment
 DEPLOYMENT_NAME=$PROJECT_NAME
 # Espacio de nombres (namespace), si no está en el default
-NAMESPACE="default"
+NAMESPACE="$APP_KUBE_CONTEXT"
 # Ruta del endpoint al que quieres enviar la petición
 ENDPOINT="/actuator/refresh"
 
