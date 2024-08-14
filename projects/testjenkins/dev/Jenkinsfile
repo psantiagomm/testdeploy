@@ -16,6 +16,13 @@ pipeline {
         APP_DOCKER_CONTEXT = "app"
     }
     stages {
+        stage('Print') {
+            steps {
+                script {
+                    echo "Print stage"
+                }
+            }
+        }
         stage('Clone app repository') {
             steps {
                 dir('app') {
