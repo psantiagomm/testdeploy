@@ -33,6 +33,16 @@ pipeline {
                 }
             }
         }
+        stage('Read Maven POM') {
+            steps {
+                script {
+                    def pom = readMavenPom file: "$APP_POM_PATH"
+                    echo "POM Content: ${pom}"
+                    echo "ArtifactId: ${pom.artifactId ?: 'No ArtifactId found'}"
+                    echo "Version: ${pom.version ?: 'No Version found'}"
+                }
+            }
+        }
         stage('Build Docker Image') {
             environment {
                 APP_ARTIFACT_ID = readMavenPom(file: "$APP_POM_PATH").getArtifactId()
