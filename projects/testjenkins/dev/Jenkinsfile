@@ -1,0 +1,57 @@
+pipeline {
+    agent any
+    environment {
+        APP_PROJECT_NAME = 'testjenkins'
+        APP_PROJECT_PATH = ""
+    }
+    stages {
+        stage('Clonar Repositorios') {
+            steps {
+                // Clonar el primer repositorio
+                checkout([
+                    $class: 'GitSCM', 
+                    branches: [[name: '*/main']],
+                    userRemoteConfigs: [[url: 'https://github.com/psantiagomm/testdeploy.git']]
+                ])
+            }
+        }
+        stage('Load Reusable Stages') {
+            steps {
+                script {
+                    stages = load './updatePropertiesStages.groovy'
+                }
+            }
+        }
+        stage('Update configmap') {
+
+            steps {
+                script {
+                    stages.updateConfigmapStage()
+                    
+                }
+            }
+        }
+        stage('Wait') {
+            steps {
+                script {
+                    stages.waitStage()
+                }
+            }
+        }
+        stage('Refresh pods') {
+            steps {
+                script {
+                    stages.refreshPodsStage()
+                }
+            }
+        }
+    }
+    post {
+        success {
+            echo 'Update properties completed successfully!'
+        }
+        failure {
+            echo 'Update properties failed!'
+        }
+    }
+}
