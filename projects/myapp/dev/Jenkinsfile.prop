@@ -6,7 +6,7 @@ pipeline {
         APP_RELATIVE_PATH = "./projects/myapp"
         APP_CREATE_CONFIGMAP_SCRIPT = "$APP_RELATIVE_PATH/create-configmap.sh"
         APP_REFRESH_PODS_TIMEOUT = 10
-        APP_MASTER_PASS_CREDENTIAL_ID = "MYAPP_MATER_PASS"
+        APP_MASTER_PASS_CREDENTIAL_ID = "MYAPP_MATER_PASS_DEV"
     }
     stages {
         stage('Load Reusable Stages') {

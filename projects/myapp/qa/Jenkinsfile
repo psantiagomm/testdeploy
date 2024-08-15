@@ -14,7 +14,7 @@ pipeline {
         APP_DOCKERFILE = "app/deploy/Dockerfile"
         APP_DOCKER_CONTEXT = "app"
         APP_REPLICAS = 1
-        APP_MASTER_PASS_CREDENTIAL_ID = "MYAPP_MATER_PASS"
+        APP_MASTER_PASS_CREDENTIAL_ID = "MYAPP_MATER_PASS_QA"
     }
     stages {
         stage('Clone app repository') {
