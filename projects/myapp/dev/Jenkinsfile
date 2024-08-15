@@ -4,17 +4,17 @@ pipeline {
 
         APP_DOCKER_REGISTRY = "localhost:5000"
 
-        APP_POM_PATH = 'app/collectionapi/pom.xml'
+        APP_POM_PATH = 'app/pom.xml'
 
-        APP_PROJECT_NAME = 'collectionapi'
-        APP_KUBE_NAMESPACE = "default"
+        APP_PROJECT_NAME = 'testjenkins'
+        APP_KUBE_NAMESPACE = "dev"
         APP_PROFILE = "dev"
         APP_PORT = 8081
         APP_NODEPORT = 30001
-        APP_DOCKERFILE = "app/collectionapi/deploy/Dockerfile"
-        APP_DOCKER_CONTEXT = "app/collectionapi"
+        APP_DOCKERFILE = "app/deploy/Dockerfile"
+        APP_DOCKER_CONTEXT = "app"
         APP_REPLICAS = 1
-        APP_MASTER_PASS_CREDENTIAL_ID = "COLLECTIONAPI_MATER_PASS"
+        APP_MASTER_PASS_CREDENTIAL_ID = "MYAPP_MATER_PASS"
     }
     stages {
         stage('Clone app repository') {
@@ -23,7 +23,7 @@ pipeline {
                     checkout([
                         $class: 'GitSCM', 
                         branches: [[name: '*/main']],
-                        userRemoteConfigs: [[url: 'http://10.100.82.76:9003/Indra-T1/gatewayfixed/collect.git', credentialsId: 'SANTIAGO_GIT_TIGO' ]]
+                        userRemoteConfigs: [[url: 'https://github.com/psantiagomm/testjenkins.git']]
                     ])
                 }
             }

@@ -1,5 +1,5 @@
 def updateConfigmapStage() {
-    withCredentials([string(credentialsId: 'TESTJENKINS_MATER_PASS', variable: 'MASTER_PASS')]) {
+    withCredentials([string(credentialsId: "$APP_MASTER_PASS_CREDENTIAL_ID", variable: 'MASTER_PASS')]) {
     sh '''
         #!/bin/bash
         chmod +x ${APP_CREATE_CONFIGMAP_SCRIPT}

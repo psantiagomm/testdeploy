@@ -2,11 +2,11 @@ pipeline {
     agent any
     environment {
         APP_PROJECT_NAME = 'testjenkins'
-        APP_PROJECT_PATH = ""
-        APP_KUBE_NAMESPACE = "default"
-        APP_RELATIVE_PATH = "./projects/testjenkins/dev"
+        APP_KUBE_NAMESPACE = "qa"
+        APP_RELATIVE_PATH = "./projects/testjenkins"
         APP_CREATE_CONFIGMAP_SCRIPT = "$APP_RELATIVE_PATH/create-configmap.sh"
         APP_REFRESH_PODS_TIMEOUT = 10
+        APP_MASTER_PASS_CREDENTIAL_ID = "MYAPP_MATER_PASS"
     }
     stages {
         stage('Load Reusable Stages') {
@@ -21,7 +21,6 @@ pipeline {
             steps {
                 script {
                     stages.updateConfigmapStage()
-                    
                 }
             }
         }
