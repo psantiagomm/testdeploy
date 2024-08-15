@@ -1,11 +1,9 @@
 def buildStage() {
     defineEnvVars()
     echo "Building the application... APP_PROJECT_NAME=${env.APP_PROJECT_NAME}"
-    echo "La imagen que se va a generar es: ${APP_DOCKER_REGISTRY}/${APP_IMAGE_FULL_NAME}"
+    echo "Image: ${APP_DOCKER_REGISTRY}/${APP_IMAGE_FULL_NAME}"
     docker.build("${APP_DOCKER_REGISTRY}/${APP_IMAGE_FULL_NAME}", "-f $APP_DOCKERFILE $APP_DOCKER_CONTEXT")
-    echo "Imagen contruida exitosamente"
-    echo "Funciona env.APP_FUNCIONA ${env.APP_FUNCIONA}"
-    echo "Funciona APP_FUNCIONA ${APP_FUNCIONA}"
+    echo "Build completed successfully"
 }
 
 def pushStage() {
@@ -20,8 +18,6 @@ def deployStage() {
     withCredentials([string(credentialsId: "$APP_MASTER_PASS_CREDENTIAL_ID", variable: 'MASTER_PASS')]) {
     sh '''
         #!/bin/bash
-        pwd
-        ls -l
         chmod +x ./deploy/scripts/sh/deploy-01-deploy.sh
         ./deploy/scripts/sh/deploy-01-deploy.sh
     '''
@@ -30,7 +26,6 @@ def deployStage() {
 
 def defineEnvVars() {
     env.IMAGE_NAME = env.APP_PROJECT_NAME
-    env.APP_FUNCIONA = "Valor de funciona"
 
     def pom = readMavenPom file: "$APP_POM_PATH"
     env.APP_ARTIFACT_ID = pom.artifactId
