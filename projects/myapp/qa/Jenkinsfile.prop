@@ -5,7 +5,7 @@ pipeline {
         APP_KUBE_NAMESPACE = "qa"
         APP_RELATIVE_PATH = "./projects/myapp"
         APP_CREATE_CONFIGMAP_SCRIPT = "$APP_RELATIVE_PATH/create-configmap.sh"
-        APP_REFRESH_PODS_TIMEOUT = 10
+        APP_REFRESH_PODS_TIMEOUT = 90
         APP_MASTER_PASS_CREDENTIAL_ID = "MYAPP_MATER_PASS"
     }
     stages {
