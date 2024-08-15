@@ -6,7 +6,7 @@ pipeline {
 
         APP_POM_PATH = 'app/pom.xml'
 
-        APP_PROJECT_NAME = 'testjenkins'
+        APP_PROJECT_NAME = 'myapp'
         APP_KUBE_NAMESPACE = "dev"
         APP_PROFILE = "dev"
         APP_PORT = 8081
