@@ -20,7 +20,7 @@ spec:
         - name: {{PROJECT}}
           image: {{IMAGE}}
           command: ["java"]
-          args: ["-jar", "app.jar", "--spring.config.additional-location=file:///config/", "--spring.profiles.active={{PROFILE}}", "--jasypt.encryptor.password=${JASYPT_ENCRYPTOR_PASSWORD}"]
+          args: ["-jar", "app.jar", "--spring.config.additional-location=file:///config/", "--spring.profiles.active={{PROFILE}}", "--jasypt.encryptor.password={{MASTER_PASS}}"]
           ports:
             - containerPort: 8080
           imagePullPolicy: Always
