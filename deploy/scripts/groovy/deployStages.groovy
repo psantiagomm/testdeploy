@@ -25,8 +25,16 @@ def deployStage() {
 }
 
 def defineEnvVars() {
-    env.IMAGE_NAME = env.APP_PROJECT_NAME
+    defineDefaultVars()
+    defineImage()
+}
 
+def defineDefaultVars() {
+    // Default environment variables
+    env.APP_DOCKER_REGISTRY = "${env.APP_DOCKER_REGISTRY ?: 'localhost:5000'}"
+}
+
+def defineImage() {
     def pom = readMavenPom file: "$APP_POM_PATH"
     env.APP_ARTIFACT_ID = pom.artifactId
     env.APP_ARTIFACT_VERSION = pom.version

@@ -2,7 +2,7 @@ pipeline {
     agent any
     environment {
 
-        APP_DOCKER_REGISTRY = "localhost:5000"
+        // APP_DOCKER_REGISTRY = "localhost:5000"
 
         APP_POM_PATH = 'app/pom.xml'
 
