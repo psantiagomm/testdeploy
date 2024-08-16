@@ -18,8 +18,8 @@ def deployStage() {
     withCredentials([string(credentialsId: "$APP_MASTER_PASS_CREDENTIAL_ID", variable: 'MASTER_PASS')]) {
     sh '''
         #!/bin/bash
-        chmod +x ./deploy/scripts/sh/deploy-01-deploy.sh
-        ./deploy/scripts/sh/deploy-01-deploy.sh
+        chmod +x ${APP_SCRIPTS_DEPLOY_PATH}
+        ${APP_SCRIPTS_DEPLOY_PATH}
     '''
     }
 }
