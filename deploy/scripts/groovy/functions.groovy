@@ -5,6 +5,7 @@ def defineDefaultVars() {
     env.APP_SCRIPTS_PATH = "${env.APP_SCRIPTS_PATH ?: './deploy/scripts'}"
 
     env.APP_SH_SCRIPTS_DEPLOY_PATH = defineValue(env.APP_SH_SCRIPTS_DEPLOY_PATH, "${env.APP_SCRIPTS_PATH}/sh/deploy-01-deploy.sh")
+    env.APP_KUBE_DEPLOY_PATH = defineValue(env.APP_KUBE_DEPLOY_PATH, "deploy/deployment.yaml)
 }
 
 def defineImage() {
