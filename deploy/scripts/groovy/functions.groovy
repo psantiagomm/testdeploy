@@ -3,8 +3,7 @@ def defineDefaultVars() {
     echo "Default environment variables"
     env.APP_DOCKER_REGISTRY = "${env.APP_DOCKER_REGISTRY ?: 'localhost:5000'}"
     env.APP_SCRIPTS_PATH = "${env.APP_SCRIPTS_PATH ?: './deploy/scripts'}"
-    env.APP_SCRIPTS_DEPLOY_PATH = defineValue(env.APP_SCRIPTS_DEPLOY_PATH, "${env.APP_SCRIPTS_PATH}/sh/deploy-01-deploy.sh")
-    echo "APP_SCRIPTS_DEPLOY_PATH es ${APP_SCRIPTS_DEPLOY_PATH}"
+    env.APP_SH_SCRIPTS_DEPLOY_PATH = defineValue(env.APP_SH_SCRIPTS_DEPLOY_PATH, "${env.APP_SCRIPTS_PATH}/sh/deploy-01-deploy.sh")
 }
 
 def defineImage() {

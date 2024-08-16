@@ -18,16 +18,23 @@ def deployStage() {
     withCredentials([string(credentialsId: "$APP_MASTER_PASS_CREDENTIAL_ID", variable: 'MASTER_PASS')]) {
     sh '''
         #!/bin/bash
-        chmod +x ${APP_SCRIPTS_DEPLOY_PATH}
-        ${APP_SCRIPTS_DEPLOY_PATH}
+        chmod +x ${APP_SH_SCRIPTS_DEPLOY_PATH}
+        ${APP_SH_SCRIPTS_DEPLOY_PATH}
     '''
     }
 }
 
 def defineEnvVars() {
-    def functions = load './deploy/scripts/groovy/functions.groovy'
+    env.APP_SCRIPTS_PATH = "${env.APP_SCRIPTS_PATH ?: './deploy/scripts'}"
+    env.APP_GROOVY_SCRIPTS_FUNCTIONS_PATH = defineValue(env.APP_GROOVY_SCRIPTS_FUNCTIONS_PATH, "${env.APP_SCRIPTS_PATH}/groovy/functions.groovy")
+
+    def functions = load "${APP_GROOVY_SCRIPTS_FUNCTIONS_PATH}"
     functions.defineDefaultVars()
     functions.defineImage()
+}
+
+def defineValue(value, defaultValue) {
+    return "${value ?: defaultValue}"
 }
 
 return this
