@@ -13,7 +13,7 @@ pipeline {
         APP_NODEPORT = 30002
         APP_DOCKERFILE = "app/deploy/Dockerfile"
         APP_DOCKER_CONTEXT = "app"
-        APP_REPLICAS = 2
+        APP_REPLICAS = 1
         APP_MASTER_PASS_CREDENTIAL_ID = "MYAPP_MATER_PASS_QA"
     }
     stages {
