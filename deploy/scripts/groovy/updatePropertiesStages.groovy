@@ -31,4 +31,8 @@ def defineEnvVars() {
     functions.defineDefaultVarsUpdateProperties()
 }
 
+def defineValue(value, defaultValue) {
+    return "${value ?: defaultValue}"
+}
+
 return this
