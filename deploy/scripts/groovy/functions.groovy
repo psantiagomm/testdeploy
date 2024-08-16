@@ -1,5 +1,6 @@
 def defineDefaultVars() {
     // Default environment variables
+    echo "Default environment variables"
     env.APP_DOCKER_REGISTRY = "${env.APP_DOCKER_REGISTRY ?: 'localhost:5000'}"
 }
 
