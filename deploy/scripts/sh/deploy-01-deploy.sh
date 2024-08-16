@@ -20,7 +20,7 @@ awk -v project="$PROJECT" \
     gsub(/{{REPLICAS}}/, replicas);
     gsub(/{{MASTER_PASS}}/, masterPass);
     print;
-}' "${APP_KUBE_DEPLOY_PATH}" > deployment.yaml
+}' $APP_KUBE_DEPLOY_PATH > deployment.yaml
 
 echo "El deployment resultante"
 
